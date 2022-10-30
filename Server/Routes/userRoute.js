@@ -5,5 +5,5 @@ const userRouter = express.Router()
 userRouter.post('/register', userController.register)
 userRouter.post('/login', userController.login)
 userRouter.get('/chatHome', userController.chatHome)
-
+userRouter.get('/allUsers', userController.allUsers)
 module.exports = userRouter

@@ -87,4 +87,15 @@ const chatHome=(req, res)=>{
     })
 }
 
-module.exports = {register, login, chatHome}
+const allUsers=(req, res)=>{
+    userModel.find((err, allUser)=>{
+        if(err){
+            res.json({message: `Ibternal server error, please check your internet connection!`, status: false})
+        }
+        else{
+            res.json({allUser, status: true})
+            console.log(allUser);
+        }
+    })
+}
+module.exports = {register, login, chatHome, allUsers}
