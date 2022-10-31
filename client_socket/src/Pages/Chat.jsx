@@ -9,6 +9,7 @@ import Contact from "../Components/Contact";
 function Chat() {
   const navigate = useNavigate();
   const [currentUser, setcurrentUser] = useState(undefined);
+  const [currentChat, setcurrentChat] = useState(undefined)
   const [contacts, setcontacts] = useState([]);
   useEffect(() => {
     authUser();
@@ -36,16 +37,21 @@ function Chat() {
           );
         } else {
           navigate("/login");
-          // localStorage.removeItem('chat-app-user')
         }
       });
   };
 
+  const handleChatChange=(chat)=>{
+    setcurrentChat(chat)
+  }
+
   const getAllUser = () => {
-    axios.get(allUserRoute).then((res) => {
-      console.log(res);
+      console.log(currentUser);
+      let thisUserId = (JSON.parse(localStorage.getItem('chat-app-user')))._id
+      let id = currentUser? currentUser._id : thisUserId
+    axios.get(`${allUserRoute}/${id}`).then((res) => {
       if (res.data.status) {
-        //tutorial was paused on 02: 23: 24
+        
         setcontacts(() => {
           return res.data.allUser;
         });
@@ -55,9 +61,9 @@ function Chat() {
   return (
     <>
       <Container>
-        <div className="container col-9 row bg-primary my-3 rounded">
+        <div className="container col-9 row bg-primary chat_area py-3 rounded">
           <div className="col-4">
-            <Contact contacts={contacts} currentUser={currentUser} />
+            <Contact contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
           </div>
         </div>
       </Container>
@@ -73,6 +79,10 @@ const Container = styled.div`
   gap: 1rem;
   align-items: center;
   background-color: #131324;
+  .container{
+    height: 90vh;
+    width: 90vw;
+  }
 `;
 
 export default Chat;
