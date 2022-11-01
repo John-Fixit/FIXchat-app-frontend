@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import Contact from "../Components/Contact";
+import Welcome from "../Components/Welcome";
+import ChatContainer from "../Components/ChatContainer";
 function Chat() {
   const navigate = useNavigate();
   const [currentUser, setcurrentUser] = useState(undefined);
@@ -13,7 +15,6 @@ function Chat() {
   const [contacts, setcontacts] = useState([]);
   useEffect(() => {
     authUser();
-    getAllUser();
   }, []);
 
   const authUser = () => {
@@ -35,6 +36,15 @@ function Chat() {
             "chat-app-user",
             JSON.stringify(res.data.thisUser)
           );
+          let thisUserId = (JSON.parse(localStorage.getItem('chat-app-user')))._id
+      let id = currentUser? currentUser._id : thisUserId
+      axios.get(`${allUserRoute}/${id}`).then((res) => {
+      if (res.data.status) {
+        setcontacts(() => {
+          return res.data.allUser;
+        });
+      }
+    });
         } else {
           navigate("/login");
         }
@@ -45,25 +55,20 @@ function Chat() {
     setcurrentChat(chat)
   }
 
-  const getAllUser = () => {
-      console.log(currentUser);
-      let thisUserId = (JSON.parse(localStorage.getItem('chat-app-user')))._id
-      let id = currentUser? currentUser._id : thisUserId
-    axios.get(`${allUserRoute}/${id}`).then((res) => {
-      if (res.data.status) {
-        
-        setcontacts(() => {
-          return res.data.allUser;
-        });
-      }
-    });
-  };
   return (
     <>
       <Container>
-        <div className="container col-9 row bg-primary chat_area py-3 rounded">
-          <div className="col-4">
-            <Contact contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
+        <div className="container col-9 bg-primary chat_area py-3 rounded">
+          <div className="row">
+            <div className="col-4">
+              <Contact contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
+            </div>
+            <div className="col-8">
+              {
+                currentChat == undefined ? <Welcome currentUser={currentUser}/> : 
+                <ChatContainer currentChat={currentChat}/>
+              }
+            </div>
           </div>
         </div>
       </Container>
@@ -82,6 +87,8 @@ const Container = styled.div`
   .container{
     height: 90vh;
     width: 90vw;
+    display: grid;
+    grid-template-column: 25% 75%;
   }
 `;
 

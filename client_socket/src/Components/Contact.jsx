@@ -38,7 +38,7 @@ function Contact({ contacts, currentUser, changeChat }) {
                 key={index}
                 onClick={()=>changeCurrentChat(index, contact)}
               >
-                <div className="avater w-25 h-25">
+                <div className="avatar">
                   <img
                     src={
                       contact.profile_picture != ""
@@ -47,7 +47,6 @@ function Contact({ contacts, currentUser, changeChat }) {
                     }
                     alt="profile"
                     className="rounded-circle"
-                    width={"70%"}
                   />
                 </div>
                 <div className="username">
@@ -58,12 +57,11 @@ function Contact({ contacts, currentUser, changeChat }) {
             
           </div>
           <div className="current_user p-3">
-            <div className="avater w-25">
+            <div className="avatar">
               <img
                 src={currentUserImage != "" ? currentUserImage : user}
                 alt="profile"
                 className="rounded-circle"
-                width={"80%"}
               />
             </div>
           <div className="username">
@@ -78,10 +76,10 @@ function Contact({ contacts, currentUser, changeChat }) {
 
 const Container = styled.div`
     background-color: #080420;
-    border-radius: 3vh;
-    height: 85vh;
     display: grid;
     grid-template-column: 10% 75% 15%;
+    border-radius: 3vh;
+    height: 85vh;
     overflow: hidden;
   .chat_name {
     font-family: sans-serif;
@@ -116,6 +114,11 @@ const Container = styled.div`
     display: flex;
     transition: 0.5s ease-in-out;
   }
+  .avatar{
+    img{
+      height: 3rem;
+    }
+  }
   .selected{
     background-color: #9186f3;
   }
@@ -124,8 +127,12 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
-    
+    gap: 1rem;
+    .avatar{
+      img{
+        height: 4rem;
+      }
+    }
   }
   
 `;

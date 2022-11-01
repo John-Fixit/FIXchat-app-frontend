@@ -80,7 +80,6 @@ const chatHome=(req, res)=>{
                 }
                 else{
                     res.json({thisUser, status: true})
-                    console.log(thisUser);
                 }
             })
         }
@@ -88,13 +87,14 @@ const chatHome=(req, res)=>{
 }
 
 const allUsers=(req, res)=>{
-    userModel.find((err, allUser)=>{
+    const userId = req.params.id
+    userModel.find((err, allUsers)=>{
         if(err){
-            res.json({message: `Ibternal server error, please check your internet connection!`, status: false})
+            res.json({message: `Internal server error, please check your internet connection!`, status: false})
         }
         else{
+            let allUser = allUsers.filter((user)=>user._id != userId)
             res.json({allUser, status: true})
-            console.log(allUser);
         }
     })
 }
