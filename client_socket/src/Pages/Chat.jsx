@@ -66,7 +66,7 @@ function Chat() {
             <div className="col-8">
               {
                 currentChat == undefined ? <Welcome currentUser={currentUser}/> : 
-                <ChatContainer currentChat={currentChat}/>
+                <ChatContainer currentChat={currentChat} currentUser={currentUser} />
               }
             </div>
           </div>

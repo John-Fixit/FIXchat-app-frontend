@@ -4,6 +4,7 @@ require('dotenv').config()
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const userRouter = require('./Routes/userRoute')
+const messageRouter = require('./Routes/messagesRoute')
 const mongoose = require('mongoose')
 app.use(bodyParser.urlencoded({extended: true, limit: true}))
 app.use(bodyParser.json())
@@ -17,6 +18,7 @@ mongoose.connect(MONGODB_URL, (err)=>{
     }
 })
 app.use('/auth', userRouter)
+app.use('/message', messageRouter)
 const PORT = process.env.PORT
 const server = app.listen(PORT || 5000, ()=>{
     console.log(`app is listening on port: ${PORT}`);
