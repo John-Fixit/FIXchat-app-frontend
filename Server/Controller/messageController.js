@@ -8,7 +8,6 @@ const addMessage=(req, res)=>{
         sender: from
     }, (err, data)=>{
         if(err){
-            console.log(err);
             res.json({message: `internal server error. message not addded successfully`, status: false})
         }
         else{
@@ -24,9 +23,10 @@ const getallMessage=(req, res)=>{
         users:{ $all: [from, to] }
     }, (err, result)=>{
         if(!err){
-            const sortedMessage = result.sort({updatedAt: 1})
-            console.log(sortedMessage);
-            const projectMessages = sortedMessage.map((msg)=>{
+            console.log(result);
+            // const sortedMessage = result.sort(()=>{updatedAt: 1});
+            // console.log(sortedMessage);
+            const projectMessages = result.map((msg)=>{
                 return {
                     fromSelf: msg.sender.toString() === from,
                     message: msg.message.text,
