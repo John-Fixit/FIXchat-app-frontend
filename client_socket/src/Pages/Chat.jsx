@@ -152,6 +152,9 @@ const Container = styled.div`
         .chatBody{
           display: none;
         }
+        .mdChatBody{
+         overflow: hidden;
+        }
       }
   }
 `;

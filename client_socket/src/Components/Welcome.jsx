@@ -97,7 +97,7 @@ function Welcome({ currentUser }) {
             </label>
             </div>
           </Profile_avatar>
-          <img src={robot} alt="robot" className="robot" width={`30%`}/>
+          <img src={robot} alt="robot" className="robot" width={`32%`}/>
           <div className="text-center">
             <h2>
               Welcome <span>{currentUser.username}!</span>
@@ -124,8 +124,8 @@ const Profile_avatar = styled.div`
   }
   .avatar {
     img {
-      height: 25vh;
-      width: 25vh;
+      height: 20vh;
+      width: 20vh;
     }
   }
   @media only screen and (max-width: 768px)and (min-width: 50px){

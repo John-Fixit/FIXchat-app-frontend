@@ -32,10 +32,10 @@ const scrollRef = useRef()
         socket.current.emit("send-msg", {
           to: currentChat._id,
           from: currentUser._id,
-          msg
+          msg,
         })
         const msgs = [...messages]
-        msgs.push({fromSelf: true, message: msg})
+        msgs.push({fromSelf: true, message: msg, time: new Date().toLocaleTimeString()})
         setmessages(msgs)
     }
     useEffect(()=>{
@@ -47,6 +47,7 @@ const scrollRef = useRef()
     }, [])
 
     useEffect(()=>{
+      console.log(arrivalMessage)
       arrivalMessage && setmessages((prev)=>[...prev, arrivalMessage])
     }, [arrivalMessage])
 

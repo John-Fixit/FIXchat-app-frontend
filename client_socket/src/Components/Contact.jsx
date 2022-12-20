@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import styled from "styled-components";
 import user from "../assets/user.jpg";
 import logo from '../assets/1.png'
@@ -71,50 +71,6 @@ function Contact({ contacts, currentUser, changeChat, toggleStatusFunc, toggle }
                   </div>
                 </div>
               ))}
-              {contacts.map((contact, index) => (
-                <div
-                  className={`contact px-2 py-2 ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
-                  key={index}
-                  onClick={() => changeCurrentChat(index, contact)}
-                >
-                  <img
-                    src={
-                      contact.profile_picture != ""
-                        ? contact.profile_picture
-                        : user
-                    }
-                    alt="profile"
-                    className="rounded-circle avatar"
-                  />
-                  <div className="username">
-                    <span className="text-white">{contact.username}</span>
-                  </div>
-                </div>
-              ))}
-              {contacts.map((contact, index) => (
-                <div
-                  className={`contact px-2 py-2 ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
-                  key={index}
-                  onClick={() => changeCurrentChat(index, contact)}
-                >
-                  <img
-                    src={
-                      contact.profile_picture != ""
-                        ? contact.profile_picture
-                        : user
-                    }
-                    alt="profile"
-                    className="rounded-circle avatar"
-                  />
-                  <div className="username">
-                    <span className="text-white">{contact.username}</span>
-                  </div>
-                </div>
-              ))}
             </div>
             <div
               className={`current_user ${
@@ -131,7 +87,9 @@ function Contact({ contacts, currentUser, changeChat, toggleStatusFunc, toggle }
             </div>
           </Container>
           <div className="barIcon mt-2" onClick={changeToggle}>
-            <FaBars size={'4vh'}/>
+            {
+              toggle?<FaArrowLeft size={'4vh'}/>: <FaArrowRight size={'4vh'}/>
+            }
           </div>
         </GenContainer>
       )}

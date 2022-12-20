@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Picker from 'emoji-picker-react'
 import {IoMdSend} from 'react-icons/io'
 import {BsEmojiSmileFill} from 'react-icons/bs'
+import { FaImage } from 'react-icons/fa'
 function ChatInput({handleSendMsg}) {
 
     const [showEmojiPicker, setshowEmojiPicker] = useState(false)
@@ -48,6 +49,10 @@ function ChatInput({handleSendMsg}) {
             </div>
             <form className='input-container' onSubmit={(e)=>sendChat(e)}>
                 <input type="text" className='form-control' placeholder='message...' value={msg} onChange={e=>setmsg(e.target.value)}/>
+                {/* <label htmlFor='image' className='text-light p-1'>
+                    <FaImage size={`4vh`}/>
+                    <input type="file" id='image' className='d-none'/>
+                </label> */}
                 <button className="btn submit">
                     <IoMdSend size='3.5vh' className='text-light'/>
                 </button>
