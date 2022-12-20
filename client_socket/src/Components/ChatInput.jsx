@@ -17,9 +17,6 @@ function ChatInput({handleSendMsg}) {
         message+=emoji.emoji
         setmsg(message)
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault()
-    }
 
     const sendChat=(e)=>{
         e.preventDefault();
@@ -52,7 +49,7 @@ function ChatInput({handleSendMsg}) {
             <form className='input-container' onSubmit={(e)=>sendChat(e)}>
                 <input type="text" className='form-control' placeholder='message...' value={msg} onChange={e=>setmsg(e.target.value)}/>
                 <button className="btn submit">
-                    <IoMdSend size='4vh' className='text-light'/>
+                    <IoMdSend size='3.5vh' className='text-light'/>
                 </button>
             </form>
         </Container>
@@ -64,17 +61,15 @@ const Section=styled.div`
 position:absolute;
 top:-460px;
 background-color: #080420;
-box-shadow: 0 5px 10px #9a86f3;
-
+box-shadow: 0 2px 20px #9a86f3;
 ` 
 const Container = styled.div`
 display: flex;
 align-items: center;
-height: 20%;
 background-color: #080420;
-padding: 1rem 2rem;
+padding: 0.5rem 0rem 0.5rem 0.7rem;
 border-radius: 2rem;
-padding-bottom: 0.3rem;
+padding-bottom: 0.4rem;
 .button-container{
     display: flex;
     align-items: center;
@@ -86,7 +81,6 @@ padding-bottom: 0.3rem;
             color: orange;
             cursor: pointer;    
         }
-        
     }
 }
 .input-container{
@@ -94,7 +88,6 @@ padding-bottom: 0.3rem;
     border-radius: 2rem;
     display: flex;
     align-content: center;
-
     input{
         width: 90%;
         height: 60%;

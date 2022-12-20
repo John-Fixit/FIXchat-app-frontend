@@ -10,7 +10,7 @@ function Logout() {
     }
   return (
     <div>
-        <button className="btn btn-light" onClick={handleClick}><FaRegArrowAltCircleUp size='3.5vh' className='thisIcon' style={{color: '#131324'}}/></button>
+        <button className="btn btn-danger text-light" onClick={handleClick}><FaRegArrowAltCircleUp size='3.5vh' className='thisIcon' /></button>
         </div>
   )
 }

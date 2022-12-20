@@ -1,6 +1,12 @@
 const { userModel } = require("../Model/userModel");
 const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary')
 require('dotenv').config()
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET 
+  });
 const register = (req, res)=>{
    const {username, email, password, profile_picture} = req.body;
 
@@ -98,4 +104,24 @@ const allUsers=(req, res)=>{
         }
     })
 }
-module.exports = {register, login, chatHome, allUsers}
+
+const uploadPhoto =(req, res)=>{
+   const { id, fileUrl } = req.body
+    cloudinary.v2.uploader.upload(fileUrl, (err, data)=>{
+        if(err){
+            res.json({message: 'Error in uploading photo, try again!', status: false})
+        }
+        else{
+            userModel.findByIdAndUpdate({_id: id}, {$set: {'profile_picture': data.secure_url}}, (err, data)=>{
+                if(err){
+                    res.json({message: 'Error occurred in updating profile picture', status: false})
+                }
+                else{
+                    res.json({message: 'uploading successfull', status: true})
+                }
+            })
+        }
+    })
+
+}
+module.exports = {register, login, chatHome, allUsers, uploadPhoto}

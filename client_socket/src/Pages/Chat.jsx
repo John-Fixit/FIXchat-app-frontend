@@ -1,22 +1,32 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { allUserRoute, chatRoute } from "../Utils/APIRoutes";
+import React, { useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { allUserRoute, chatRoute, host } from "../Utils/APIRoutes";
 import styled from "styled-components";
-import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import Contact from "../Components/Contact";
 import Welcome from "../Components/Welcome";
 import ChatContainer from "../Components/ChatContainer";
+import { io } from "socket.io-client";
+import "./chatLoader.css";
+
 function Chat() {
+  const routerParameter = useParams()
   const navigate = useNavigate();
   const [currentUser, setcurrentUser] = useState(undefined);
-  const [currentChat, setcurrentChat] = useState(undefined)
+  const [currentChat, setcurrentChat] = useState(undefined);
   const [contacts, setcontacts] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
   useEffect(() => {
     authUser();
   }, []);
-
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
+  const socket = useRef();
   const authUser = () => {
     const token = JSON.parse(localStorage.getItem("userToken"));
     axios
@@ -29,6 +39,9 @@ function Chat() {
       })
       .then((res) => {
         if (res.data.status) {
+          if(routerParameter.id != token){
+              navigate('/login')
+          }
           setcurrentUser(() => {
             return res.data.thisUser;
           });
@@ -36,40 +49,58 @@ function Chat() {
             "chat-app-user",
             JSON.stringify(res.data.thisUser)
           );
-          let thisUserId = (JSON.parse(localStorage.getItem('chat-app-user')))._id
-      let id = currentUser? currentUser._id : thisUserId
-      axios.get(`${allUserRoute}/${id}`).then((res) => {
-      if (res.data.status) {
-        setcontacts(() => {
-          return res.data.allUser;
-        });
-      }
-    });
+          let thisUserId = JSON.parse(
+            localStorage.getItem("chat-app-user")
+          )._id;
+          let id = currentUser?currentUser._id: thisUserId
+          axios.get(`${allUserRoute}/${id}`).then((res) => {
+            if (res.data.status) {
+              setisLoading(false);
+              setcontacts(() => {
+                return res.data.allUser;
+              });
+            }
+          });
         } else {
           navigate("/login");
         }
       });
   };
 
-  const handleChatChange=(chat)=>{
-    setcurrentChat(chat)
-  }
+  const handleChatChange = (chat) => {
+    setcurrentChat(() => {
+      return chat;
+    });
+  };
 
   return (
     <>
       <Container>
-        <div className="container col-9 bg-primary chat_area py-3 rounded">
-          <div className="row">
-            <div className="col-4">
-              <Contact contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
+        <div className="container col-sm-9 bg-primary chat_area rounded">
+          {isLoading ? (
+            <div class="loader"></div>
+          ) : (
+            <div className="row">
+              <div className="col-4">
+                <Contact
+                  contacts={contacts}
+                  currentUser={currentUser}
+                  changeChat={handleChatChange}
+                />
+              </div>
+              <div className="col-8">
+                {currentChat == undefined ? (
+                  <Welcome currentUser={currentUser} />
+                ) : (
+                  <ChatContainer
+                    currentChat={currentChat}
+                    currentUser={currentUser}
+                    socket={socket}
+                  />
+                )}
+              </div>
             </div>
-            <div className="col-8">
-              {
-                currentChat == undefined ? <Welcome currentUser={currentUser}/> : 
-                <ChatContainer currentChat={currentChat} currentUser={currentUser} />
-              }
-            </div>
-          </div>
+          )}
         </div>
       </Container>
     </>
@@ -81,14 +112,12 @@ const Container = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  align-items: center;
+  justify-content: center;
   background-color: #131324;
-  .container{
-    height: 90vh;
-    width: 90vw;
-    display: grid;
-    grid-template-column: 25% 75%;
+  .container {
+    heigth: 50vh;
+    //   display: grid;
+    //   grid-template-column: 25% 75%;
   }
 `;
 

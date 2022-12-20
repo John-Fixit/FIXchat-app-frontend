@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import user from "../assets/user.jpg";
@@ -17,17 +16,21 @@ function Contact({ contacts, currentUser, changeChat }) {
     }
   }, [currentUser]);
 
-  const changeCurrentChat = (index, contact,) => {
-      setcurrentSelected(index)
-      changeChat(contact)
+  const changeCurrentChat = (index, contact) => {
+    setcurrentSelected(index);
+    changeChat(contact);
   };
+  const changeChatToUser=()=>{
+    setcurrentSelected(undefined)
+    changeChat(undefined)
+  }
 
   return (
     <>
       {currentUser && (
-        <Container>
-          <div className="brand text-center">
-            <h2 className="chat_name fw-bold text-white">FIXchat-app</h2>
+        <Container className="my-2">
+          <div className="brand text-center pt-3">
+            <h2 className="chat_name fw-bold text-white mx-2 py-1 rounded bg-primary">FIXchat-app</h2>
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => (
@@ -36,37 +39,30 @@ function Contact({ contacts, currentUser, changeChat }) {
                   index === currentSelected ? "selected" : ""
                 }`}
                 key={index}
-                onClick={()=>changeCurrentChat(index, contact)}
+                onClick={() => changeCurrentChat(index, contact)}
               >
-                <div className="avatar">
-                  <img
-                    src={
-                      contact.profile_picture != ""
-                        ? contact.profile_picture
-                        : user
-                    }
-                    alt="profile"
-                    className="rounded-circle"
-                  />
-                </div>
+                <img
+                  src={
+                    contact.profile_picture != ""
+                      ? contact.profile_picture
+                      : user
+                  }
+                  alt="profile"
+                  className="rounded-circle avatar"
+                />
                 <div className="username">
-                  <p className="text-white fs-5">{contact.username}</p>
+                  <span className="text-white">{contact.username}</span>
                 </div>
               </div>
             ))}
-            
           </div>
-          <div className="current_user p-3">
-            <div className="avatar">
+          <div className={`current_user ${currentSelected==undefined && 'selected'}`} onClick={changeChatToUser}>
               <img
                 src={currentUserImage != "" ? currentUserImage : user}
                 alt="profile"
-                className="rounded-circle"
+                className="rounded-circle img"
               />
-            </div>
-          <div className="username">
-              <h4 className="text-white">{currentUserName}</h4>
-            </div>
+              <h3 className="text-white">{currentUserName}</h3>
           </div>
         </Container>
       )}
@@ -75,38 +71,36 @@ function Contact({ contacts, currentUser, changeChat }) {
 }
 
 const Container = styled.div`
-    background-color: #080420;
-    display: grid;
-    grid-template-column: 10% 75% 15%;
-    border-radius: 3vh;
-    height: 85vh;
-    overflow: hidden;
-  .chat_name {
-    font-family: sans-serif;
-  }
-  .contacts{
+  background-color: #080420;
+  display: grid;
+  // grid-template-column: 10% 75% 15%;
+  border-radius: 1.5vh;
+  min-height: 94vh;
+  overflow: hidden;
+  .contacts {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 70vh;
     overflow: auto;
-    gap: 0.8rem;
-    &::-webkit-scrollbar{
+    gap: 0.5rem;
+    &::-webkit-scrollbar {
       width: 3px;
     }
-    &::-webkit-scrollbar-thumb{
-      background-color: grey;
+    &::-webkit-scrollbar-thumb {
+      background-color: navy;
       border-radius: 5vh;
     }
-    &::-webkit-scrollbar-track{
-
+    &::-webkit-scrollbar-track {
+      background-color: white;
       border-radius: 3vh;
     }
-    
   }
-  .contact{
+  .contact {
     background-color: #ffffff12;
     cursor: pointer;
-    min-height: 5rem;
+    height: 3.5rem;
+    display: flex;
     width: 90%;
     border-radius: 2vh;
     padding: 0.2rem;
@@ -114,26 +108,27 @@ const Container = styled.div`
     display: flex;
     transition: 0.5s ease-in-out;
   }
-  .avatar{
-    img{
-      height: 3rem;
-    }
+  .avatar {
+    height: 2.7rem;
+    width: 2.7rem;
   }
-  .selected{
-    background-color: #9186f3;
+  .selected {
+    background-color: #9486e6 !important;
   }
-  .current_user{
+  .current_user {
     background-color: #0d0d30;
     display: flex;
     justify-content: center;
+    cursor: pointer;
+    max-height: 13vh;
     align-items: center;
-    gap: 1rem;
-    .avatar{
-      img{
-        height: 4rem;
-      }
+    border-radius: 1vh 1vh 0 0;
+    gap: 0.7rem;
+      .img {
+        height: 3.7rem;
+        width: 3.7rem;
     }
   }
-  
+
 `;
 export default Contact;

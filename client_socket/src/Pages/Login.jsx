@@ -25,12 +25,11 @@ function Login() {
       axios.post(loginRoute, {
         username, password
       }).then((res)=>{
-        console.log(res.data);
         const {token, status} = res.data
           if(status){
             localStorage.setItem('userToken', JSON.stringify(token))
             toast.success(res.data.message, toastOptions)
-            navigate('/')
+            navigate(`/${token}`)
           }
           else{
             toast.error(res.data.message, toastOptions)
