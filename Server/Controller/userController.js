@@ -57,7 +57,7 @@ const login =(req, res)=>{
                     }
                     else{
                         if(same){
-                            const token = jwt.sign({ username }, process.env.JWT_SECRET, {expiresIn: '2h'})
+                            const token = jwt.sign({ username }, process.env.JWT_SECRET, {expiresIn: '4h'})
                             res.json({token, status: true})
                         }
                         else{

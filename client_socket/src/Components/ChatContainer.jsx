@@ -73,7 +73,7 @@ const scrollRef = useRef()
               <h4>{currentChat.username}</h4>
             </div>
           </div>
-          <Logout />
+          <Logout/>
         </div>
         <div className="chat-container text-center">
                 {
@@ -101,6 +101,7 @@ const scrollRef = useRef()
     </>
   );
 }
+
 const Container = styled.div`
 overflow: hidden;
  .chat-header{
@@ -116,6 +117,7 @@ overflow: hidden;
     .avatar{
         img{
             height: 3rem;
+            width: 3rem;
         }
     }
     .username{
@@ -125,7 +127,7 @@ overflow: hidden;
     }
 }
 .chat-container{
-  min-height: 78.5vh;
+  height: 78.5vh;
   padding: 0.6rem 0.4rem;
   display: flex;
   flex-direction: column;

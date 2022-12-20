@@ -17,6 +17,7 @@ function Chat() {
   const [currentChat, setcurrentChat] = useState(undefined);
   const [contacts, setcontacts] = useState([]);
   const [isLoading, setisLoading] = useState(true);
+  const [toggle, settoggle] = useState(true)
   useEffect(() => {
     authUser();
   }, []);
@@ -73,30 +74,38 @@ function Chat() {
     });
   };
 
+  const toggleStatusFunc=(status)=>{
+    settoggle(status)
+  }
+
   return (
     <>
       <Container>
         <div className="container col-sm-9 bg-primary chat_area rounded">
           {isLoading ? (
-            <div class="loader"></div>
+            <div className="loader"></div>
           ) : (
-            <div className="row">
-              <div className="col-4">
+            <div className="sub-container">
+              <div className={`transition ${!toggle&&'contact'} ${toggle&&'mdContact'}  `}>
                 <Contact
                   contacts={contacts}
                   currentUser={currentUser}
                   changeChat={handleChatChange}
+                  toggleStatusFunc={toggleStatusFunc}
+                  toggle={toggle}
                 />
               </div>
-              <div className="col-8">
+              <div className={`transition ${!toggle&&'chatBody'} ${toggle&&'mdChatBody'}  `}>
                 {currentChat == undefined ? (
                   <Welcome currentUser={currentUser} />
                 ) : (
+                  <div>
                   <ChatContainer
                     currentChat={currentChat}
                     currentUser={currentUser}
                     socket={socket}
                   />
+                  </div>
                 )}
               </div>
             </div>
@@ -114,10 +123,36 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #131324;
-  .container {
-    heigth: 50vh;
-    //   display: grid;
-    //   grid-template-column: 25% 75%;
+  .sub-container{
+    display: flex;
+    position: relative;
+    .transition{
+      transition: all 0.5s ease;
+    }
+    .contact{
+      width: 35vw;
+      z-index: 99;
+    }
+    .chatBody{
+      width: 76vw;
+    }
+    .mdContact{
+      width: 6.5vw;
+    }
+    .mdChatBody{
+      width: 93.5vw;
+    }
+  }
+  @media only screen and (max-width: 768px)and (min-width: 50px){
+      .sub-container{
+        .contact{
+          width: 55vh;
+          z-index: 10;
+        }
+        .chatBody{
+          display: none;
+        }
+      }
   }
 `;
 

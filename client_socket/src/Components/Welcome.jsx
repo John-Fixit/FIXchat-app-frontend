@@ -97,7 +97,7 @@ function Welcome({ currentUser }) {
             </label>
             </div>
           </Profile_avatar>
-          <img src={robot} alt="robot" width={"40%"} />
+          <img src={robot} alt="robot" className="robot" width={`30%`}/>
           <div className="text-center">
             <h2>
               Welcome <span>{currentUser.username}!</span>
@@ -128,6 +128,14 @@ const Profile_avatar = styled.div`
       width: 25vh;
     }
   }
+  @media only screen and (max-width: 768px)and (min-width: 50px){
+      .avatar{
+        img {
+          height: 15vh;
+          width: 15vh;
+        }
+      }
+  }
 `;
 
 const Container = styled.div`
@@ -139,5 +147,13 @@ const Container = styled.div`
   span {
     color: #131324;
   }
+  .robot{
+    width: 10vh important;
+  }
+  @media only screen and (max-width: 768px)and (min-width: 50px){
+    .robot{
+      width: 40vh !important;
+    }
+}
 `;
 export default Welcome;
