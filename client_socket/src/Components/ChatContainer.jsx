@@ -41,7 +41,7 @@ const scrollRef = useRef()
     useEffect(()=>{
         if(socket.current){
           socket.current.on('msg-recieve', (msg)=>{
-            setarrivalMessage({fromSelf: false, message: msg})
+            setarrivalMessage({fromSelf: false, message: msg, time: new Date().toLocaleTimeString()});
           })
         }
     }, [])
@@ -83,7 +83,6 @@ const scrollRef = useRef()
                   messages.map((message, index)=>{
                     return (
                       <div ref={scrollRef} key={index} className=''>
-                       
                         <div className={`message mt-1 ${message.fromSelf? 'sender justify-content-end' : 'received justify-content-start'}`}>
                           <div className="content px-2">
                             <span className="text-light text-start">{message.message}</span>

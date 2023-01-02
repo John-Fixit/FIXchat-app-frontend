@@ -12,7 +12,6 @@ function Messages({ messages }) {
         {messages.map((message) => {
           return (
             <div>
-              <p>hello world</p>
               <div className={`message ${message.fromSelf? 'sender text-start' : 'recieved text-end'}`}>
                 <div className="content fs-5 rounded-3">
                   <p className="text-light">{message.message}</p>

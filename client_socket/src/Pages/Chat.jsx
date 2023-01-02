@@ -33,9 +33,9 @@ function Chat() {
     axios
       .get(chatRoute, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json",
         },
       })
       .then((res) => {
