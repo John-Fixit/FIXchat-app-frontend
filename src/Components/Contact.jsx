@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaBars, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import styled from "styled-components";
 import user from "../assets/user.jpg";
-import logo from '../assets/1.png'
+import logo from '../assets/JF logo.png'
 function Contact({ contacts, currentUser, changeChat, toggleStatusFunc, toggle }) {
   const [currentUserName, setcurrentUserName] = useState(undefined);
   const [currentUserImage, setcurrentUserImage] = useState(undefined);
@@ -43,8 +43,8 @@ function Contact({ contacts, currentUser, changeChat, toggleStatusFunc, toggle }
         <GenContainer>
           <Container className="my-2">
             <div className={`brand text-center shadow rounded bg-primary d-flex ${toggle&&'mx-1'}`}>
-              <img src={logo} alt="logo" className="logo rounded-circle" />
-              <p className={`chat_name fw-bold text-white`}>
+              <img src={logo} alt="logo" className="logo border rounded-circle" />
+              <p className={`chat_name fw-bold text-white my-auto`}>
                 FIXchat-app
               </p>
             </div>
@@ -114,7 +114,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 4rem;
+    height: 3.2rem;
     margin: 1vh 2vh;
     gap: 0.75rem;
     .logo{

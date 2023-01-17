@@ -78,7 +78,7 @@ function Welcome({ currentUser }) {
                   isLoading && "d-none"
                 }`}
               >
-                <FaPencilAlt />
+                <FaPencilAlt cursor={'pointer'}/>
               </div>
               <div
                 className={`spinner-border text-color ${

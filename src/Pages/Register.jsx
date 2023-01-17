@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import { registerRoute } from "../Utils/APIRoutes";
+import logo from "../assets/JF logo.png"
 function Register() {
   const navigate = useNavigate()
   const [values, setvalues] = useState({
@@ -59,10 +60,11 @@ else if (email == ""){
   return (
     <>
       <FormContainer>
+        <img src={logo} alt="logo" className="border rounded-circle"/>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="col-md-5 mx-auto shadow p-3">
-            <div className="brand bg-primary text-light py-2 rounded-pill">
-              <h1 className="text-center ">FIXchat-app</h1>
+          <div className="shadow px-3 border border-danger border-3 rounded">
+            <div className="brand bg-primary text-light py-1 rounded-pill">
+              <h3 className="text-center ">FIXchat-app</h3>
             </div>
             <div className="form-group my-3">
               <label htmlFor="" className="fw-bold f-label">Username</label>
@@ -131,7 +133,16 @@ else if (email == ""){
 const FormContainer = styled.div`
   height: 100vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #131324;
+  img{
+    height: 8vh;
+    width: 8vh;
+    border: 1px solid;
+    border-image: linear-gradient(45deg, blue, red) 1;
+  }
   .f-label{
     color: white;
   }

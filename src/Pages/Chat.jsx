@@ -77,6 +77,11 @@ function Chat() {
   const toggleStatusFunc=(status)=>{
     settoggle(status)
   }
+  const closeSideNav =()=>{
+      if(!toggle){
+        settoggle(true);
+      }
+  }
 
   return (
     <>
@@ -95,7 +100,7 @@ function Chat() {
                   toggle={toggle}
                 />
               </div>
-              <div className={`transition ${!toggle&&'chatBody'} ${toggle&&'mdChatBody'}  `}>
+              <div className={`transition ${!toggle&&'chatBody'} ${toggle&&'mdChatBody'}`} onClick={closeSideNav} on>
                 {currentChat == undefined ? (
                   <Welcome currentUser={currentUser} />
                 ) : (
