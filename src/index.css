@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: cursive !important;
-    
+    /* background-color: #131324; */
 }
 *::-webkit-scrollbar{
     width: 3px;
@@ -20,6 +20,11 @@ body{
     max-height: 100vh;
     max-width: 100vw;
     overflow: hidden;
+}
+.bg-image{
+    /* background-image: url(./assets//homeBg.PNG);
+    background-repeat: no-repeat;
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%); */
 }
 
 input, button :focus{

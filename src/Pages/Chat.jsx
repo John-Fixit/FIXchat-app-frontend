@@ -84,7 +84,6 @@ function Chat() {
   }
 
   return (
-    <>
       <Container>
         <div className="container col-sm-9 bg-primary chat_area rounded">
           {isLoading ? (
@@ -117,7 +116,6 @@ function Chat() {
           )}
         </div>
       </Container>
-    </>
   );
 }
 

@@ -45,9 +45,7 @@ const scrollRef = useRef()
           })
         }
     }, [])
-
     useEffect(()=>{
-      console.log(arrivalMessage)
       arrivalMessage && setmessages((prev)=>[...prev, arrivalMessage])
     }, [arrivalMessage])
 
@@ -82,7 +80,7 @@ const scrollRef = useRef()
                   messages.length ? 
                   messages.map((message, index)=>{
                     return (
-                      <div ref={scrollRef} key={index} className=''>
+                      <div ref={scrollRef} key={uuidv4} className=''>
                         <div className={`message mt-1 ${message.fromSelf? 'sender justify-content-end' : 'received justify-content-start'}`}>
                           <div className="content px-2">
                             <span className="text-light text-start">{message.message}</span>
@@ -92,7 +90,7 @@ const scrollRef = useRef()
                       </div>
                     )
                   }) :
-                 <p><b>{currentChat.username} is on FIXchat</b> <br />You can start conversation!</p>): 
+                 <p><b>{currentChat.username} is on FIXchat</b> <br />Start conversation!</p>): 
                  <div className="line-wobble mx-auto"></div>
                 }
         </div>      

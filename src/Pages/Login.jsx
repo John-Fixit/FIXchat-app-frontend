@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -6,14 +6,22 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loginRoute } from "../Utils/APIRoutes";
 import logo from "../assets/JF logo.png";
-import loginLoader from "./loginLoader.css"
+import loginLoader from "./loginLoader.css";
+
+import BarLoader from "react-spinners/BarLoader";
 function Login() {
   const navigate = useNavigate();
   const [values, setvalues] = useState({
     username: "",
     password: "",
   });
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(false);
+  const override = {
+    margin: "0 auto",
+    width: "100%",
+    borderRadius: "5px 5px 0 0",
+  };
+
   const toastOptions = {
     position: "top-left",
     autoClose: 8000,
@@ -25,15 +33,15 @@ function Login() {
     e.preventDefault();
     if (handleValidation()) {
       let { username, password } = values;
-      setisLoading(true)
+      setisLoading(true);
       axios
         .post(loginRoute, {
-          username,
+          username: username.toLowerCase(),
           password,
         })
         .then((res) => {
           const { token, status } = res.data;
-          setisLoading(false)
+          setisLoading(false);
           if (status) {
             localStorage.setItem("userToken", JSON.stringify(token));
             toast.success(res.data.message, toastOptions);
@@ -61,12 +69,27 @@ function Login() {
   return (
     <>
       <FormContainer>
-        <img src={logo} alt="logo" className="border rounded-circle" />
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className={`col-sm-4`}>
           <div className="border border-danger border-3 rounded shadow p-3">
-            <div className="brand bg-primary text-light py-1 rounded-pill">
+            <div className="header">
+              <Link to={"/"} className="text-center">
+                <img src={logo} alt="logo" className="border rounded-circle" />
+              </Link>
+              <p className="text-light my-auto">
+                Don't have an account?{" "}
+                <Link to="/register" className="text-decoration-none fw-bold">
+                  Sign up
+                </Link>
+              </p>
+            </div>
+            <div className="brand bg-primary text-light py-1 rounded">
               <h3 className="text-center ">FIXchat-app</h3>
             </div>
+            <BarLoader
+              color={`red`}
+              loading={isLoading}
+              cssOverride={override}
+            />
             <div className="form-group my-3">
               <label htmlFor="" className="fw-bold f-label">
                 Username
@@ -77,6 +100,7 @@ function Login() {
                   className="form-control"
                   placeholder="Username"
                   name="username"
+                  autoComplete="off"
                   onChange={(e) => handleChange(e)}
                 />
                 <label htmlFor="">Username</label>
@@ -99,25 +123,11 @@ function Login() {
               </div>
             </div>
             <button className="btn btn-primary rounded-pill w-100 fw-bold">
-              {
-                !isLoading? <div class="spinner">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div> :"Login Account"
-              }
+              Login Account
             </button>
-            <span className="text-light">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-decoration-none fw-bold">
-                Sign up
-              </Link>
-            </span>
+            <div>
+              <p className="forgotPswBtn text-light my-2" onClick={()=>navigate('/login/forgot_password')}>Forgotten Password</p>
+            </div>
           </div>
         </form>
       </FormContainer>
@@ -134,15 +144,36 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #131324;
+  .header{
+    display: flex;
+    justify-content: space-between;
+  }
   img {
     height: 8vh;
     width: 8vh;
     border: 1px solid;
     border-image: linear-gradient(45deg, blue, red) 1;
-
   }
   .f-label {
     color: white;
+  }
+  .forgotPswBtn {
+    cursor: pointer;
+
+  }
+  .home_btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    gap: 0.5rem;
+    .home_btn_text {
+      margin: auto;
+    }
+    &:hover {
+      color: #dc3545 !important;
+      transition: all 0.3s ease;
+    }
   }
 `;
 export default Login;

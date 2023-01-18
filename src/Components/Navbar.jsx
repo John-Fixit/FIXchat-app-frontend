@@ -20,7 +20,7 @@ function Navbar() {
         className={`navbar navbar-expand-sm navbar-light bg_navy px-lg-4`}
       >
         <div className="container-fluid">
-          <Link to="" className="navbar-brand" href="#">
+          <Link to="/" className="navbar-brand">
             <img src={logo} alt="logo" className="logo border rounded-circle" />
             <p className="my-auto">FIXCHAT</p>
           </Link>
